@@ -133,9 +133,8 @@ p, a {
   </head>
   <body>
     <div id="pageContent" style="display:none;">
-      <audio id="soundtrack" hidden muted>
-  <source src="sounds/soundtrack.mp3" type="audio/mpeg">
-</audio>
+      <iframe src="sounds/silence.mp3" allow="autoplay" style="display: none"></iframe>
+  <audio src="sounds/soundtrack.mp3" id="soundtrack" autoplay></audio>
       <div class="boxed">
         <p id="notify"></p>
       </div>

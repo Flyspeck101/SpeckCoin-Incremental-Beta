@@ -43,7 +43,7 @@ const coins = {
         }
       },
       cost: function (lvl) {
-        return Math.floor(data.game.coins.basePrices[lvl - 1] * Math.pow(1.5, (data.game.coins.amounts[lvl] - data.game.coins.produced[lvl - 1])));
+        return Math.floor(data.game.coins.basePrices[lvl - 1] * Math.pow(1.1, (data.game.coins.amounts[lvl] - data.game.coins.produced[lvl - 1])));
       }
 };
 
@@ -109,72 +109,19 @@ function reset() {
 
 }
 
-const modal = document.createElement('div');
-modal.classList.add('modal');
-modal.id = 'modal';
-$("modal").hide;
-
-modal.innerHTML = `
-  <div class="modalContent">
-    <span class="close2">&times;</span>
-    <h2 id="modalTitle"></h2>
-    <p id="modalParagraph"></p>
-    <div id="otherHTML"></div>
-  </div>
-`;
-
-modal.querySelector('.close2').addEventListener('click', () => { $("modal").hide(); });
-
-function displayModal(title, paragraph, otherHTML="") {
-  $("modalTitle").html(title);
-  $("modalParagraph").html(paragraph);
-  $("otherHTML").html(otherHTML);
-  $("modal").show();
-}
-
 // Global Variables (For display and stuff)
 let timePassed = 0;
 let secondsPassed = 0;
 let keys = [];
 
 $(document).ready(function() {
-  if (Core.loadGameTo()) {
-    $("#saveFound").html("Loading save...");
-  } else {
-    reset();
-    $("#saveFound").html("Starting game...");
-  }
-  let soundtrackStarted = false;
-document.getElementById("soundtrack").addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
-}, false);
+  
+  
 
   document.getElementById("default").click();
   setInterval((function() { // Update
     timePassed++;
-
-    if (timePassed < 400) {
-      Core.showById("loader");
-      Core.hideById("pageContent");
-    } else {
-      Core.hideById("loader");
-      Core.showById("pageContent");
-    }
-
-    if (timePassed == 350) {
-      $("#saveFound").html("Ready!");
-    }
-
-    if (timePassed == 360) {
-      if (confirm("Do you want to start the game with sound?")) {
-        Core.muteToggle();
-      }
-    }
-
-    if (timePassed == 400) {
-      document.getElementById("soundtrack").play();
-    }
+    Core.showById("pageContent");
 	  
     if (timePassed % 200 == 0) secondsPassed++;
 
@@ -236,6 +183,11 @@ document.getElementById("soundtrack").addEventListener('ended', function() {
 
   window.addEventListener("beforeunload", function (e) { Core.saveGame(data) });
 
+document.getElementById("soundtrack").addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+}, false);
+
   if (document.addEventListener) {
     document.addEventListener('contextmenu', function(e) {
       Core.notify("Imagine right-clicking in 2021");
@@ -283,7 +235,7 @@ document.getElementById("soundtrack").addEventListener('ended', function() {
     // mark keys that were released
     keys[e.keyCode] = false;
   }
-	var modal = document.getElementById("myModal");
+	var myModal = document.getElementById("myModal");
 
 	// Get the button that opens the modal
 	var btn = document.getElementById("myBtn");
@@ -293,18 +245,18 @@ document.getElementById("soundtrack").addEventListener('ended', function() {
 
 	// When the user clicks the button, open the modal 
 	btn.onclick = function() {
-	modal.style.display = "block";
+	  myModal.style.display = "block";
 	}
 
 	// When the user clicks on <span> (x), close the modal
 	span.onclick = function() {
-	modal.style.display = "none";
+	  myModal.style.display = "none";
 	}
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
-	if (event.target == modal) {
-	modal.style.display = "none";
+	if (event.target == myModal) {
+	  myModal.style.display = "none";
 	}
 }
   document.getElementById("importSave").addEventListener("change", Core.importSave, false);

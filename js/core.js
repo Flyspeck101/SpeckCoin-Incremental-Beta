@@ -4,7 +4,7 @@ class Core {
   static notify(text) {
     const digitsHex = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"];
     document.getElementById("notify").innerHTML = text;
-    startFadeDec(255, 0, 0, 0, 0, 0, 256, "notify");
+    startFadeDec(280, 0, 0, 31, 31, 31, 256, "notify");
   }
   static hideById(id) {
     document.getElementById(id).style.display = "none";
